@@ -11,8 +11,9 @@ class CreateRolesTable extends Migration
      */
     public function up(): void
     {
+        // Schema::dropIfExists('roles');
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedInteger('id')->primary();
             $table->string('role', 50)->unique();
             $table->timestamps();
         });
