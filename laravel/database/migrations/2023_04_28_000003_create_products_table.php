@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('description', 200)->nullable();
-            $table->string('image', 100)->unique()->default('defaultImg.jpg');
+            $table->string('image', 100)->default('defaultImg.jpg');
             $table->char('SKU', 20)->unique();
             $table->timestamps();
         });

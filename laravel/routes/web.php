@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,11 +13,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/merchant/home', function ()
+{
+    $products = Product::all();
+    return view('home', compact('products'));
 });
 
-Route::get('/Product/{id}', function ($id) {
-    return
-})->where('id', '[0-9]+')->name('Product');
+
+Route::get('/admin/home', function ()
+{
+    $products = Product::all();
+    return view('home', compact('products'));
+});
+
+Route::get('/admin/signup', function ()
+{
+    return view('signup');
+});
+
+Route::post('/admin/signup', 'App\Http\Controllers\SignupController@createUser');
+
+Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+');
+
+// Route::get('/upload', function ($file){
+
+// });

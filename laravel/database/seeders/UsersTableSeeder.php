@@ -17,10 +17,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         //clear table
-        DB::table('users')->truncate();
+        // DB::table('users')->truncate();
 
         User::create([
-            'name' => 'John Doe',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'john.doe@example.com',
             'password' => Hash::make('password'),
             'CRUD' => 3,
@@ -28,7 +29,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Jane Doe',
+            'first_name' => 'Jane',
+            'last_name' => 'Doe',
             'email' => 'jane.doe@example.com',
             'password' => Hash::make('password'),
             'CRUD' => 3,
@@ -36,7 +38,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Bob Smith',
+            'first_name' => 'Bob',
+            'last_name' => 'Smith',
             'email' => 'bob.smith@example.com',
             'password' => Hash::make('password'),
             'CRUD' => 210,

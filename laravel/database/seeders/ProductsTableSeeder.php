@@ -16,7 +16,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         // clear table
-        DB::table('products')->truncate();
+        // DB::table('products')->truncate();
 
         $products = [
             [

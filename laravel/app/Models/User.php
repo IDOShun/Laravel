@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    protected $fillable = [
+        'first_name', 'last_name', 'email', 'password', 'CRUD', 'role_id'
+    ];
+
     // use HasFactory;
     public function role()
     {
