@@ -38,7 +38,11 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Role
+                @auth('user')
+                    {{auth('user')->user()->role_id}}
+                {{-- {{var_dump(Auth::guard('user')->check())}} --}}
+                @endauth
+
             </div>
         </nav>
     </div>

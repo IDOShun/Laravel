@@ -4,6 +4,7 @@
         @include('head')
     </head>
     <body class="bg-dark">
+        <div><h3 style="color: red;">{{$error}}</h3></div>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>

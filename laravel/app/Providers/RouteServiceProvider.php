@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    public const SUPER_ADMIN_HOME = '/superAdmin/home';
     /**
      * The path to your application's "home" route.
      *

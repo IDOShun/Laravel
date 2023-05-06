@@ -18,18 +18,23 @@ Route::get('/merchant/home', function ()
     $products = Product::all();
     return view('home', compact('products'));
 });
-
-
-Route::get('/admin/home', function ()
+Route::get('/superAdmin/home', function ()
 {
     $products = Product::all();
     return view('home', compact('products'));
-});
+})->middleware('guest:user');
 
 Route::get('/admin/signup', function ()
 {
     return view('signup');
 });
+
+Route::get('/superAdmin/login', function()
+{
+    return view('login');
+})->middleware('guest:user');
+
+Route::post('/superAdmin/login', [\App\Http\Controllers\LoginController::class, 'adminLogin']);
 
 Route::post('/admin/signup', 'App\Http\Controllers\SignupController@createUser');
 
