@@ -4,7 +4,6 @@
         @include('head')
     </head>
     <body class="bg-dark">
-        <div><h3 style="color: red;">{{$error}}</h3></div>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -14,7 +13,11 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form action="/admin/signup" method="POST">
+                                        @if ($role == 'admin')
+                                            <form action="/admin/signup" method="POST">
+                                        @else
+                                            <form action="/merchant/signup" method="POST">
+                                        @endif
                                             @csrf
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
@@ -53,9 +56,9 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="card-footer text-center py-3">
+                                    {{-- <div class="card-footer text-center py-3">
                                         <div class="small"><a href="login.html">Have an account? Go to login</a></div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

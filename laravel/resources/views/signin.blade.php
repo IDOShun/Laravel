@@ -4,13 +4,12 @@
         @include('head')
     </head>
     <body class="bg-dark">
-        {{-- show errors if any --}}
+        <!-- -- show errors if any -- -->
         @if ($errors->any())
             @foreach ($errors->all() as $error)
-                <div>{{$error}}</div>
+                <div><h3 style="color: red">{{$error}}</h3></div>
             @endforeach
         @endif
-
 
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
@@ -19,9 +18,13 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login for Admin</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Sign in</h3></div>
                                     <div class="card-body">
-                                        <form action="/superAdmin/login" method="POST">
+                                        @if ($role == 'aboveAdmin')
+                                            <form action="/aboveAdmin/signin" method="POST">
+                                        @else
+                                            <form action="/merchant/signin" method="POST">
+                                        @endif
                                             @csrf
                                             <div class="form-floating mb-3">
                                                 <input name="email" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" required/>
@@ -37,12 +40,16 @@
                                             </div> --}}
                                             <div class="mt-4 mb-0 text-center">
                                                 {{-- <a class="small" href="password.html">Forgot Password?</a> --}}
-                                                <button class="btn btn-primary text-center" type="submit">Login</a>
+                                                <button class="btn btn-primary text-center" type="submit">Sign in</a>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/admin/signup">Need an account? Sign up!</a></div>
+                                        @if ($role == 'aboveAdmin')
+                                            <div class="small"><a href="/aboveAdmin/signup">Need an account? Sign up!</a></div>
+                                        @else
+                                            <div class="small"><a href="/merchant/signup">Need an account? Sign up!</a></div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

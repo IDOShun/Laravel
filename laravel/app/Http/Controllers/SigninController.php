@@ -10,11 +10,11 @@ use App\Providers\RouteServiceProvider;
 /**
  * processing authentications
  */
-class LoginController extends Controller
+class SigninController extends Controller
 {
-    // public function __construct(){
-    //     $this->middleware('guest:user')->except('logout');
-    // }
+    public function __construct(){
+        $this->middleware('guest:user')->except('logout');
+    }
     private const SUPERADMIN = 1;
     private const ADMIN = 2;
     private const MERCHANT = 3;
@@ -35,7 +35,7 @@ class LoginController extends Controller
     // }
     //
 
-    public function adminLogin(Request $request){
+    public function aboveAdminSignin(Request $request){
         $credentials =  $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -45,14 +45,13 @@ class LoginController extends Controller
         if(Auth::guard('user')->attempt($credentials)) {
             $role = $request->user('user')->role_id;
             switch ($role) {
-                //super Admin
                 case self::SUPERADMIN :
                     $request->session()->regenerate(); //update session
-                    return redirect()->intended('/superAdmin/home');
+                    return redirect()->intended('/aboveAdmin/home');
                     break;
                 case self::ADMIN :
                     $request->session()->regenerate(); //update session
-                    return redirect()->intended('/admin/home');
+                    return redirect()->intended('/aboveAdmin/home');
                     break;
                 default:
                     Auth::guard('user')->logout();
@@ -65,11 +64,11 @@ class LoginController extends Controller
         }
         //when can not log in
         return back()->withErrors([
-            'error' => 'Can not log in. Email or Password or Both are wrong.'
+            'error' => 'Can not log in. Email, Password or Both are wrong.'
         ]);
     }
 
-    public function merchantLogin(Request $request){
+    public function merchantSignin(Request $request){
         $credentials =  $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -83,7 +82,7 @@ class LoginController extends Controller
         }
         //when can not log in
         return back()->withErrors([
-            'error' => 'Can not log in. Email or Password or Both are wrong.'
+            'error' => 'Can not log in. Email, Password or Both are wrong.'
         ]);
     }
 }
