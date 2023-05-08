@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,23 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//---------Logout--------------
+Route::get('/logout', function(Request $request){
+    // Auth::logout();
+    Auth::guard('user')->logout();
+
+    $request->session()->invalidate();
+
+    $request->session()->regenerateToken();
+
+    return redirect('/merchant/signin');
+});
+
+
+
+
+
+
 //-----------Signup-------------
 Route::get('/admin/signup', function ()
 {
@@ -33,15 +51,19 @@ Route::post('/merchant/signup', [\App\Http\Controllers\SignupController::class, 
 Route::get('/aboveAdmin/signin', function()
 {
     return view('signin', ['role' => 'aboveAdmin']);
-});//->middleware('guest:user');
+})->middleware('guest:user')->name('login');
 
 Route::post('/aboveAdmin/signin', [\App\Http\Controllers\SigninController::class, 'aboveAdminSignin']);
 
 Route::get('/merchant/signin', function()
 {
     return view('signin', ['role' => 'merchant']);
-});
+})->middleware('guest:user');
+
 Route::post('/merchant/signin', [\App\Http\Controllers\SigninController::class, 'merchantSignin']);
+
+
+
 
 
 //-----------Home-------------
@@ -56,7 +78,7 @@ Route::get('/aboveAdmin/home', function ()
 {
     $products = Product::all();
     return view('home', compact('products'));
-})->middleware('guest:user');
+})->middleware('auth:user');
 
 
 

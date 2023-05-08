@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Gate;
 
 class UserPermissionController extends Controller
 {
@@ -39,6 +40,8 @@ class UserPermissionController extends Controller
     }
 
     public function showUserPermission(Request $request){
+        Gate::authorize('superAdmin');
+
         $user = User::findOrFail($request['id']);
         return view('EditCRUD', compact('user'));
     }

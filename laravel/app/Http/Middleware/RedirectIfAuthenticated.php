@@ -19,15 +19,22 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                if($guard === 'user'){
-                    // return redirect(RouteServiceProvider::SUPER_ADMIN_HOME);
-                    echo 'true';
-                }
-                // return redirect(RouteServiceProvider::HOME);
+        if(Auth::guard('user')->check()){
+            // if user_role is above admin
+            if(auth('user')->user()->role_id >= 2){
+                return redirect('/aboveAdmin/home');
             }
+            return redirect('/merchant/home');
         }
+        // foreach ($guards as $guard) {
+        //     if (Auth::guard($guard)->check()) {
+        //         if($guard === 'user'){
+        //             // return redirect(RouteServiceProvider::SUPER_ADMIN_HOME);
+        //             echo 'true';
+        //         }
+        //         // return redirect(RouteServiceProvider::HOME);
+        //     }
+        // }
 
         return $next($request);
     }
