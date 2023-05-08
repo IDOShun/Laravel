@@ -42,4 +42,11 @@ class ProductController extends Controller
         ]);
         return redirect('/aboveAdmin/home');
     }
+
+    public function delete(Request $request){
+        $product = Product::findOrFail($request['id']);
+        $product->delete();
+
+        return redirect('/aboveAdmin/home');
+    }
 }

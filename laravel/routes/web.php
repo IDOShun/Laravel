@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,8 +68,16 @@ Route::get('/aboveAdmin/upload', function(){
 Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+');
 Route::post('/Product/Edit', 'App\Http\Controllers\ProductController@edit')->where('id', '[0-9]+');
 Route::post('/Product/Update', 'App\Http\Controllers\ProductController@update')->where('id', '[0-9]+');
+Route::post('/Product/Delete', 'App\Http\Controllers\ProductController@delete')->where('id', '[0-9]+');
 Route::post('/aboveAdmin/product/upload', 'App\Http\Controllers\ProductController@upload');
 
-// Route::get('/upload', function ($file){
 
-// });
+
+
+Route::post('/superAdmin/CRUD', function(){
+    $users = User::all();
+    return view('CRUD', compact('users'));
+});
+Route::post('/superAdmin/CRUD/Edit', 'App\Http\Controllers\UserPermissionController@showUserPermission');
+Route::post('/superAdmin/CRUD/update', 'App\Http\Controllers\UserPermissionController@editPermission')->name('post.editPermission');
+

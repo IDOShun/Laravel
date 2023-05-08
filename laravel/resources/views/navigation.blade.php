@@ -24,7 +24,10 @@
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                             <a class="nav-link" href="/aboveAdmin/upload">Upload Product</a>
-                            <a class="nav-link" href="#">Edit CRUD Permission</a>
+                            <form action="/superAdmin/CRUD" method="POST">
+                                @csrf
+                                <button class="nav-link btn btn-link" type="submit">Edit CRUD Permission</button>
+                            </form>
                         </nav>
                     </div>
                 </div>
