@@ -12,28 +12,14 @@ use App\Providers\RouteServiceProvider;
  */
 class SigninController extends Controller
 {
-    public function __construct(){
-        $this->middleware('guest:user')->except('logout');
-    }
     private const SUPERADMIN = 1;
     private const ADMIN = 2;
     private const MERCHANT = 3;
 
-    // public function superAdminLogin(Request $request){
-    //     $credentials =  $request->validate([
-    //                         'email' => ['required', 'email'],
-    //                         'password' => ['required'],
-    //                     ]);
-    //     $credentials['role_id'] = 1;
-    //     if(Auth::guard('user')->attempt($credentials)){ //if user is 'super admin'
-    //         $request->session()->regenerate();//update session
-    //         return redirect(RouteServiceProvider::SUPER_ADMIN_HOME);
-    //     }
-    //     return back()->withErrors([
-    //         'error' => 'Can not log in. Email or Password or Both are wrong as Super Admin.'
-    //     ]);
-    // }
-    //
+    // move to home when the user is logging in
+    public function __construct(){
+        $this->middleware('guest:user')->except('logout');
+    }
 
     public function aboveAdminSignin(Request $request){
         $credentials =  $request->validate([
@@ -78,7 +64,8 @@ class SigninController extends Controller
          //trying logging in as merchant
         if(Auth::guard('user')->attempt($credentials)){
             $request->session()->regenerate(); //update session
-            return redirect()->intended('/merchant/home');
+            // return redirect()->intended('/merchant/home');
+            return redirect(route('get.merchant.home'));
         }
         //when can not log in
         return back()->withErrors([

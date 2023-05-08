@@ -21,9 +21,9 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Sign in</h3></div>
                                     <div class="card-body">
                                         @if ($role == 'aboveAdmin')
-                                            <form action="/aboveAdmin/signin" method="POST">
+                                            <form action="{{route('post.aboveAdmin.signin')}}" method="POST">
                                         @else
-                                            <form action="/merchant/signin" method="POST">
+                                            <form action="{{route('post.merchant.signin')}}" method="POST">
                                         @endif
                                             @csrf
                                             <div class="form-floating mb-3">
@@ -46,9 +46,9 @@
                                     </div>
                                     <div class="card-footer text-center py-3">
                                         @if ($role == 'aboveAdmin')
-                                            <div class="small"><a href="/aboveAdmin/signup">Need an account? Sign up!</a></div>
+                                            <div class="small"><a href="{{route('get.admin.signup')}}">Need an account? Sign up!</a></div>
                                         @else
-                                            <div class="small"><a href="/merchant/signup">Need an account? Sign up!</a></div>
+                                            <div class="small"><a href="{{route('get.merchant.signup')}}">Need an account? Sign up!</a></div>
                                         @endif
                                     </div>
                                 </div>
