@@ -21,8 +21,10 @@ class RedirectIfAuthenticated
 
         if(Auth::guard('user')->check()){
             // if user_role is above admin
-            if(auth('user')->user()->role_id <= 2){
-                return redirect(route('get.aboveAdmin.home'));
+            if(auth('user')->user()->role_id == 1){
+                return redirect(route('get.superAdmin.home'));
+            }else if(auth('user')->user()->role_id == 2){
+                return redirect(route('get.admin.home'));
             }
             return redirect(route('get.merchant.home'));
         }

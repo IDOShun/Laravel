@@ -24,7 +24,11 @@ class ProductController extends Controller
         $product->SKU = $request->SKU;
         // $product->image = $request->image;
         $product->save();
-        return redirect('/aboveAdmin/home');
+        if(auth('user')->user()->role_id == 1){
+            return redirect(route('get.superAdmin.home'));
+        }else if(auth('user')->user()->role_id == 2){
+            return redirect(route('get.admin.home'));
+        }
     }
 
     public function upload(Request $request){
@@ -40,13 +44,20 @@ class ProductController extends Controller
             'image' => $read_path,
             'SKU' => $request['SKU']
         ]);
-        return redirect('/aboveAdmin/home');
+        if(auth('user')->user()->role_id == 1){
+            return redirect(route('get.superAdmin.home'));
+        }else if(auth('user')->user()->role_id == 2){
+            return redirect(route('get.admin.home'));
+        }
     }
 
     public function delete(Request $request){
         $product = Product::findOrFail($request['id']);
         $product->delete();
-
-        return redirect('/aboveAdmin/home');
+        if(auth('user')->user()->role_id == 1){
+            return redirect(route('get.superAdmin.home'));
+        }else if(auth('user')->user()->role_id == 2){
+            return redirect(route('get.admin.home'));
+        }
     }
 }

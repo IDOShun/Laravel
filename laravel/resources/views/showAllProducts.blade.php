@@ -17,7 +17,7 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                                <form method="POST" action="/Product" class="btn btn-outline-dark mt-auto">
+                                <form method="POST" action="{{route('post.product')}}" class="btn btn-outline-dark mt-auto">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$p->id}}"/>
                                     <button type="submit" class="btn btn-outline-none mt-auto">Product Detail</button>

@@ -17,6 +17,13 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
+                @if (Auth::guard('user')->id() != $user->id)
+                    <form action="{{route('post.deleteUser')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$user->id}}">
+                        <button class="btn btn-danger" type="submit">Delete User Info</button>
+                    </form>
+                @endif
                 <form method="POST" action="{{route('post.editPermission')}}">
                     @csrf
                     <div class="col-md-6">

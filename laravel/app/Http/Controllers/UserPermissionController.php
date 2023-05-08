@@ -36,13 +36,17 @@ class UserPermissionController extends Controller
         $user = User::findOrFail($request['id']);
         $user->CRUD = $CRUD_num;
         $user->save();
-        return redirect('/aboveAdmin/home');
+        return redirect(route('get.superAdmin.home'));
     }
 
     public function showUserPermission(Request $request){
-        Gate::authorize('superAdmin');
-
         $user = User::findOrFail($request['id']);
         return view('EditCRUD', compact('user'));
+    }
+
+    public function deleteUser(Request $request){
+        $user = User::findOrFail($request['id']);
+        $user->delete();
+        return redirect(route('get.superAdmin.home'));
     }
 }

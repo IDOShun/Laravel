@@ -6,7 +6,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 @foreach ($users as $user)
-                    <form method="POST" action="/superAdmin/CRUD/Edit">
+                    <form method="POST" action="{{route('post.showUserPermission')}}">
                         @csrf
                         <div class="col-md-6">
                             <div class="small mb-1">User Id:{{$user->id}}</div>

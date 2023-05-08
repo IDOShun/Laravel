@@ -33,11 +33,12 @@ class SigninController extends Controller
             switch ($role) {
                 case self::SUPERADMIN :
                     $request->session()->regenerate(); //update session
-                    return redirect()->intended('/aboveAdmin/home');
+                    // return redirect()->intended('/aboveAdmin/home');
+                    return redirect(route('get.superAdmin.home'));
                     break;
                 case self::ADMIN :
                     $request->session()->regenerate(); //update session
-                    return redirect()->intended('/aboveAdmin/home');
+                    return redirect(route('get.admin.home'));
                     break;
                 default:
                     Auth::guard('user')->logout();

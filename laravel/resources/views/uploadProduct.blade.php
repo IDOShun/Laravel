@@ -4,7 +4,7 @@
     <!-- Product section-->
     <div>
         <h1>Upload Product</h1>
-        <form method="POST" action="/aboveAdmin/product/upload" class="btn btn-outline-dark mt-auto" enctype="multipart/form-data">
+        <form method="POST" action="{{route('post.create')}}" class="btn btn-outline-dark mt-auto" enctype="multipart/form-data">
             @csrf
             <div>Product Image:<input type="file" name="image"></div>
             <div>Product Name:<input type="text" name="name"></div>

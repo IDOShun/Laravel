@@ -18,11 +18,7 @@ use Illuminate\Http\Request;
 //--------Welcome Page--------------
 Route::get('/', function(){
     return view('welcome');
-})->name('welcome');
-
-
-
-
+})->middleware('guest:user')->name('welcome');
 
 //---------Logout--------------
 Route::get('/logout', function(Request $request){
@@ -32,13 +28,8 @@ Route::get('/logout', function(Request $request){
 
     $request->session()->regenerateToken();
 
-    // return redirect('/merchant/signin');
     return redirect(route('welcome'));
-});
-
-
-
-
+})->name('logout');
 
 
 //-----------Signup-------------
@@ -72,29 +63,12 @@ Route::get('/merchant/signin', function()
 Route::post('/merchant/signin', [\App\Http\Controllers\SigninController::class, 'merchantSignin'])->name('post.merchant.signin');
 
 
-
-
-
-//-----------Home-------------
-// Route::prefix('/aboveAdmin')->group(['middleware' => 'can:admin'], function () {
-//     Route::get('/home', function ()
-//     {
-//         $products = Product::all();
-//         return view('home', compact('products'));
-//     })->name('get.aboveAdmin.home');
-// });
-// Route::prefix('/merchant')->group(['middleware' => 'can:merchant'], function () {
-//     Route::get('/home', function ()
-//     {
-//         $products = Product::all();
-//         return view('home', compact('products'));
-//     })->name('get.merchant.home');
-// });
+//-------------Home-----------------
 Route::group(['middleware' => 'can:admin'], function(){
-    Route::get('/aboveAdmin/home', function(){
+    Route::get('/admin/home', function(){
         $products = Product::all();
         return view('home', compact('products'));
-    })->middleware('auth:user')->name('get.aboveAdmin.home');
+    })->middleware('auth:user')->name('get.admin.home');
 });
 Route::group(['middleware' => 'can:merchant'], function(){
     Route::get('/merchant/home', function(){
@@ -104,46 +78,40 @@ Route::group(['middleware' => 'can:merchant'], function(){
 });
 
 
-// //-----------Home-------------
-
-// Route::get('/merchant/home', function ()
-// {
-//     $products = Product::all();
-//     return view('home', compact('products'));
-// })->name('get.merchant.home');
-
-// Route::get('/aboveAdmin/home', function ()
-// {
-//     $products = Product::all();
-//     return view('home', compact('products'));
-// })->name('get.aboveAdmin.home');
-
-
-
 
 //----------About Product---------
-Route::get('/aboveAdmin/upload', function(){
-    return view ('uploadProduct');
+// SuperAdmin and Admin do
+Route::group(['middleware' => 'can:aboveAdmin'], function(){
+    Route::prefix('aboveAdmin')->group(function(){
+        Route::get('/upload', function (){
+            return view ('uploadProduct');
+        })->middleware('auth:user')->name('get.create');
+        Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product');
+        Route::post('/Product/Edit', 'App\Http\Controllers\ProductController@edit')->where('id', '[0-9]+')->middleware('auth:user')->name('post.edit');
+        Route::post('/Product/Update', 'App\Http\Controllers\ProductController@update')->where('id', '[0-9]+')->middleware('auth:user')->name('post.update');
+        Route::post('/Product/Delete', 'App\Http\Controllers\ProductController@delete')->where('id', '[0-9]+')->middleware('auth:user')->name('post.delete');
+        Route::post('/Product/Create', 'App\Http\Controllers\ProductController@upload')->middleware('auth:user')->name('post.create');
+    });
 });
-Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+');
-Route::post('/Product/Edit', 'App\Http\Controllers\ProductController@edit')->where('id', '[0-9]+');
-Route::post('/Product/Update', 'App\Http\Controllers\ProductController@update')->where('id', '[0-9]+');
-Route::post('/Product/Delete', 'App\Http\Controllers\ProductController@delete')->where('id', '[0-9]+');
-Route::post('/aboveAdmin/product/upload', 'App\Http\Controllers\ProductController@upload');
-
-// Route::prefix('/superAdmin')->group(['middleware' => 'can:superAdmin'], function () {
-//     Route::get('/superAdmin/home', function (){
-//         $products = Product::all();
-//         return view('home', compact('products'));
-//     })->name('get.superAdmin.home');
-// });
+//merchant does
+Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product');
 
 
-//----------About CRUD---------------
-Route::post('/superAdmin/CRUD', function(){
-    $users = User::all();
-    return view('CRUD', compact('users'));
+
+//SuperAdmin does
+Route::group(['middleware' => 'can:superAdmin'], function(){
+    Route::prefix('superAdmin')->group(function () {
+        Route::get('/home', function (){
+            $products = Product::all();
+            return view('home', compact('products'));
+        })->middleware('auth:user')->name('get.superAdmin.home');
+
+        Route::post('/CRUD', function(){
+            $users = User::all();
+            return view('CRUD', compact('users'));
+        })->middleware('auth:user')->name('post.superAdmin.showUsers');
+        Route::post('/CRUD/edit', 'App\Http\Controllers\UserPermissionController@showUserPermission')->name('post.showUserPermission');
+        Route::post('/CRUD/update', 'App\Http\Controllers\UserPermissionController@editPermission')->name('post.editPermission');
+        Route::post('/CRUD/delete', 'App\Http\Controllers\UserPermissionController@deleteUser')->name('post.deleteUser');
+    });
 });
-Route::post('/superAdmin/CRUD/Edit', 'App\Http\Controllers\UserPermissionController@showUserPermission');
-Route::post('/superAdmin/CRUD/update', 'App\Http\Controllers\UserPermissionController@editPermission')->name('post.editPermission');
-

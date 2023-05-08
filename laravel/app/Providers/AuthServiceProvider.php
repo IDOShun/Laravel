@@ -17,7 +17,10 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         //
     ];
-
+    private const CREATE = 2;
+    private const READ = 3;
+    private const UPDATE = 5;
+    private const DELETE = 7;
     /**
      * Register any authentication / authorization services.
      */
@@ -32,6 +35,27 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('merchant', function (User $user) {
             return ($user->role_id === 3);
+        });
+        Gate::define('aboveAdmin', function(User $user){
+            return($user->role_id <= 2);
+        });
+
+        //CRUD gate difinition
+        Gate::define('Create', function (User $user){
+            if((($user->CRUD) % self::CREATE)==0){return true;}
+            return false;
+        });
+        Gate::define('Read', function (User $user){
+            if((($user->CRUD) % self::READ)==0){return true;}
+            return false;
+        });
+        Gate::define('Update', function (User $user){
+            if((($user->CRUD) % self::UPDATE)==0){return true;}
+            return false;
+        });
+        Gate::define('Delete', function (User $user){
+            if((($user->CRUD) % self::DELETE)==0){return true;}
+            return false;
         });
     }
 }
