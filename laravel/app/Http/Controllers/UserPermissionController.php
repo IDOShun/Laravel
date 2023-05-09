@@ -36,7 +36,7 @@ class UserPermissionController extends Controller
         $user = User::findOrFail($request['id']);
         $user->CRUD = $CRUD_num;
         $user->save();
-        return redirect(route('get.superAdmin.home'));
+        return redirect(route('get.superAdmin.showUsers'));
     }
 
     public function showUserPermission(Request $request){

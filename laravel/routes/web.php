@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 //--------Welcome Page--------------
 Route::get('/', function(){
     return view('welcome');
@@ -37,14 +38,14 @@ Route::get('/admin/signup', function ()
 {
     return view('signup', ['role' => 'admin']);
 })->name('get.admin.signup');
-Route::post('/admin/signup', [\App\Http\Controllers\SignupController::class, 'createUserAdmin']);
+Route::post('/admin/signup', [\App\Http\Controllers\SignupController::class, 'createUserAdmin'])->name('post.admin.signup');
 
 
 Route::get('/merchant/signup', function ()
 {
     return view('signup', ['role' => 'merchant']);
 })->name('get.merchant.signup');
-Route::post('/merchant/signup', [\App\Http\Controllers\SignupController::class, 'createUserMerchant']);
+Route::post('/merchant/signup', [\App\Http\Controllers\SignupController::class, 'createUserMerchant'])->name('post.merchant.signup');
 
 
 //-----------Signin-------------
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'can:admin'], function(){
         return view('home', compact('products'));
     })->middleware('auth:user')->name('get.admin.home');
 });
+
 Route::group(['middleware' => 'can:merchant'], function(){
     Route::get('/merchant/home', function(){
         $products = Product::all();
@@ -79,7 +81,7 @@ Route::group(['middleware' => 'can:merchant'], function(){
 
 
 
-//----------About Product---------
+//----------Product---------
 // SuperAdmin and Admin do
 Route::group(['middleware' => 'can:aboveAdmin'], function(){
     Route::prefix('aboveAdmin')->group(function(){
@@ -93,9 +95,8 @@ Route::group(['middleware' => 'can:aboveAdmin'], function(){
         Route::post('/Product/Create', 'App\Http\Controllers\ProductController@upload')->middleware('auth:user')->name('post.create');
     });
 });
-//merchant does
+//Merchant does
 Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product');
-
 
 
 //SuperAdmin does
@@ -106,10 +107,10 @@ Route::group(['middleware' => 'can:superAdmin'], function(){
             return view('home', compact('products'));
         })->middleware('auth:user')->name('get.superAdmin.home');
 
-        Route::post('/CRUD', function(){
+        Route::get('/CRUD', function(){
             $users = User::all();
             return view('CRUD', compact('users'));
-        })->middleware('auth:user')->name('post.superAdmin.showUsers');
+        })->middleware('auth:user')->name('get.superAdmin.showUsers');
         Route::post('/CRUD/edit', 'App\Http\Controllers\UserPermissionController@showUserPermission')->name('post.showUserPermission');
         Route::post('/CRUD/update', 'App\Http\Controllers\UserPermissionController@editPermission')->name('post.editPermission');
         Route::post('/CRUD/delete', 'App\Http\Controllers\UserPermissionController@deleteUser')->name('post.deleteUser');

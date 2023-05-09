@@ -14,9 +14,9 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
                                         @if ($role == 'admin')
-                                            <form action="/admin/signup" method="POST">
+                                            <form action="{{route('post.admin.signup')}}" method="POST">
                                         @else
-                                            <form action="/merchant/signup" method="POST">
+                                            <form action="{{route('post.merchant.signup')}}" method="POST">
                                         @endif
                                             @csrf
                                             <div class="row mb-3">

@@ -19,11 +19,11 @@ class SignupController extends Controller
             'CRUD' => 3, //read only
             'role_id' => 2 //admin
         ]);
-        return redirect('/aboveAdmin/signin');
+        return redirect()->route('get.aboveAdmin.signin');
     }
 
     public function createUserMerchant(Request $request){
-        //for Admin
+        //for Merchant
         $user = new User();
         $user->create([
             'first_name' => $request['first_name'],
@@ -33,6 +33,6 @@ class SignupController extends Controller
             'CRUD' => 3, //read only
             'role_id' => 3 //merchant
         ]);
-        return redirect('/merchant/signin');
+        return redirect()->route('get.merchant.signin');
     }
 }

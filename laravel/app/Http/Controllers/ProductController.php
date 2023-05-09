@@ -18,11 +18,17 @@ class ProductController extends Controller
     }
 
     public function update(Request $request){
+        //validation
+        $request->validate([
+            'name' => ['required', 'max:50'],
+            'description' => ['max:200'],
+            //must be uniqued to OTHER products, not mine
+            'SKU' => ['required', 'unique:products', 'max:16'],
+        ]);
         $product = Product::findOrFail($request['id']);
         $product->name = $request->name;
         $product->description = $request->description;
         $product->SKU = $request->SKU;
-        // $product->image = $request->image;
         $product->save();
         if(auth('user')->user()->role_id == 1){
             return redirect(route('get.superAdmin.home'));
@@ -32,11 +38,22 @@ class ProductController extends Controller
     }
 
     public function upload(Request $request){
+        //validation
+        $request->validate([
+            'name' => ['required', 'max:50'],
+            'description' => ['max:200'],
+            'SKU' => ['required', 'unique:products', 'max:16'],
+            'image' => ['max:100'],
+        ]);
         $data = $request->except('image');
         $file = $request->file('image');
-        $path = $file->store('/public/images/products');
+        if($file == null){
+            $read_path = 'storage/images/products/defaultImg.jpg';
+        }else{
+            $path = $file->store('/public/images/products');
 
-        $read_path = str_replace('public/', 'storage/', $path);
+            $read_path = str_replace('public/', 'storage/', $path);
+        }
         $product = new Product();
         $product->create([
             'name' => $request['name'],

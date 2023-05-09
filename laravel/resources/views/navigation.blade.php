@@ -4,7 +4,13 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="#">
+                    @if (auth('user')->user()->role_id == 1)
+                        <a class="nav-link" href="{{route('get.superAdmin.home')}}">
+                    @elseif(auth('user')->user()->role_id == 2)
+                        <a class="nav-link" href="{{route('get.admin.home')}}">
+                    @else
+                        <a class="nav-link" href="{{route('get.merchant.home')}}">
+                    @endif
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
@@ -23,10 +29,7 @@
                                 @endcan
                                 <!-- Only superAdmin Can -->
                                 @can('superAdmin')
-                                    <form action="{{route('post.superAdmin.showUsers')}}" method="POST">
-                                        @csrf
-                                        <button class="nav-link btn btn-link" type="submit">Edit CRUD Permission</button>
-                                    </form>
+                                    <a class="nav-link btn btn-link" href="{{route('get.superAdmin.showUsers')}}">Edit CRUD Permission</a>
                                 @endcan
                             </nav>
                         </div>

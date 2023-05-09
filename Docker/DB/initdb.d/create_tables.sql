@@ -29,7 +29,7 @@ CREATE TABLE Products
     id          INT(10) PRIMARY KEY AUTO_INCREMENT,
     name        VARCHAR(50) NOT NULL,
     description VARCHAR(200),
-    imagePATH   VARCHAR(100) UNIQUE default 'defaultImg.jpg',
+    imagePATH   VARCHAR(100) default 'defaultImg.jpg',
     SKU         CHAR(20) UNIQUE NOT NULL,
     created_at    DATETIME NOT NULL
 );
