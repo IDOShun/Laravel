@@ -1,3 +1,9 @@
+# NOTE: 
+
+I could not make larval environment on docker because I had never learned ‘laravel’ before 2 weeks ago, I  could make ONLY DB server, which is MYSQL, on Docker.
+I apologize for the inconvenience and I would like you to install some environment stuff to your ‘check my assignment environment’ pc.
+
+
 # Accounts
 
 - SuperAdmin Account:
@@ -21,6 +27,4 @@
     php artisan migrate:fresh
     php artisan db:seed
   ```
-## NOTE: 
-I could not make larval environment on docker because I had never learned ‘laravel’ before 2 weeks ago, I  could make ONLY DB server, which is MYSQL, on Docker.
-I apologize for the inconvenience and I would like you to install some environment stuff to your ‘check my assignment environment’ pc.
+
