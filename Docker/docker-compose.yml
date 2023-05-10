@@ -13,5 +13,12 @@ services:
     volumes:
       - db-store:/var/lib/mysql
       - ./logs:/var/log/mysql
+  
+  # web:
+  #   container_name: nginx
+  #   ports:
+  #     - "8000:8000"
+  #   build:
+  #     dockerfile: ./Nginx/Dockerfile
 volumes:
   db-store:

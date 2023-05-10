@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Doe',
             'email' => 'john.doe@example.com',
             'password' => Hash::make('password'),
-            'CRUD' => 3,
+            'CRUD' => 210,
             'role_id' => 1
         ]);
 
@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Smith',
             'email' => 'bob.smith@example.com',
             'password' => Hash::make('password'),
-            'CRUD' => 210,
+            'CRUD' => 3,
             'role_id' => 3
         ]);
     }
