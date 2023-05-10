@@ -2,6 +2,7 @@
 @section('title', 'Product')
 @section('content')
     <!-- Product section-->
+    <div style="display:flex; justify-content: center;"><h3 style="color: red;">Do You Really Want To DELETE This Product?</h3></div>
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5" style="display:flex; align-items: center; border: 2px solid black; width: 60vw;border-radius:10px; margin-right:auto; margin-left:auto;padding:2vw;justify-content: space-around;">
             <div class="row gx-4 gx-lg-5 align-items-center">
@@ -16,17 +17,10 @@
                 </div>
             </div>
         </div>
-        <!-- Merchant CAN Read Only -->
-        @cannot('merchant')
-            <!-- CANNOT 'UPDATE' who dont have permission -->
-            @cannot('Update')
-                <div style="display:flex; justify-content: center;"><h3 style="color: red;">You Do Not Have Permission To 'UPDATE'.</h3></div>
-            @endcan
-            @can('Update')
-                <div style="display:flex; width:60vw; margin-left:auto; margin-right:auto; justify-content:center; margin-top:2vh;">
-                    <a href="{{route('get.edit')}}?uuid={{$product->uuid}}" class="btn btn-dark" style="width: 20vw;">Edit Product</a>
-                </div>
-            @endcan
-        @endcan
     </section>
+    <!-- Delete Confirmation -->
+    <div style="display: flex; justify-content:space-around; width:50vw; margin-right: auto; margin-left:auto; margin-bottom: 2vh;">
+        <form method="POST" action="{{route('post.delete')}}">@csrf<input name="confirm" type="hidden" value="true"><input name="id" type="hidden" value="{{$product->id}}"><button type="submit" class="btn btn-danger" style="width: 15vw; height:5vh">YES</button></form>
+        <form method="POST" action="{{route('post.delete')}}">@csrf<input name="confirm" type="hidden" value="false"><input name="id" type="hidden" value="{{$product->id}}"><button type="submit" class="btn btn-primary" style="width: 15vw; height: 5vh;">NO</button></form>
+    </div>
 @endsection

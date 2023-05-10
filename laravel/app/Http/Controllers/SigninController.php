@@ -33,20 +33,16 @@ class SigninController extends Controller
             switch ($role) {
                 case self::SUPERADMIN :
                     $request->session()->regenerate(); //update session
-                    // return redirect()->intended('/aboveAdmin/home');
                     return redirect(route('get.superAdmin.home'));
-                    break;
                 case self::ADMIN :
                     $request->session()->regenerate(); //update session
                     return redirect(route('get.admin.home'));
-                    break;
                 default:
                     Auth::guard('user')->logout();
                     $request->session()->regenerate();
-                    return back()->witheErrors([
-                    'error' => 'You do not have permission to log in as Admin or Super Admin.',
-                ]);
-                    break;
+                    return back()->withErrors([
+                        'error' => 'You do not have permission to log in as Admin or Super Admin.',
+                    ]);
             }
         }
         //when can not log in
@@ -65,7 +61,6 @@ class SigninController extends Controller
          //trying logging in as merchant
         if(Auth::guard('user')->attempt($credentials)){
             $request->session()->regenerate(); //update session
-            // return redirect()->intended('/merchant/home');
             return redirect(route('get.merchant.home'));
         }
         //when can not log in

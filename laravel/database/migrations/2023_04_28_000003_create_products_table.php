@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->string('description', 200)->nullable();
             $table->string('image', 100)->default('defaultImg.jpg');
             $table->char('SKU', 20)->unique();
+            $table->uuid('uuid')->unique();
             $table->timestamps();
         });
     }

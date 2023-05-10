@@ -19,7 +19,7 @@
 
                 @if (Auth::guard('user')->id() != $user->id)
                 <div style="display:flex; justify-content:center;">
-                    <form action="{{route('post.deleteUser')}}" method="POST">
+                    <form action="{{route('post.deleteUser.confirm')}}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{$user->id}}">
                         <button class="btn btn-danger" type="submit" style="width:10vw;">Delete User Info</button>

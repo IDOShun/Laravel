@@ -4,13 +4,10 @@
         @include('head')
     </head>
     <body class="bg-dark">
-        <!-- -- show errors if any -- -->
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div><h3 style="color: red">{{$error}}</h3></div>
-            @endforeach
-        @endif
+    <!-- Show Error Messages If Any -->
+         @include('alert')
 
+        <!-- Sign in Section -->
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>

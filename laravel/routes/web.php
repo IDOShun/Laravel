@@ -24,11 +24,8 @@ Route::get('/', function(){
 //---------Logout--------------
 Route::get('/logout', function(Request $request){
     Auth::guard('user')->logout();
-
     $request->session()->invalidate();
-
     $request->session()->regenerateToken();
-
     return redirect(route('welcome'));
 })->name('logout');
 
@@ -88,15 +85,15 @@ Route::group(['middleware' => 'can:aboveAdmin'], function(){
         Route::get('/upload', function (){
             return view ('uploadProduct');
         })->middleware('auth:user')->name('get.create');
-        Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product');
-        Route::post('/Product/Edit', 'App\Http\Controllers\ProductController@edit')->where('id', '[0-9]+')->middleware('auth:user')->name('post.edit');
+        Route::get('/Product/Edit', 'App\Http\Controllers\ProductController@edit')->middleware('auth:user')->name('get.edit');
         Route::post('/Product/Update', 'App\Http\Controllers\ProductController@update')->where('id', '[0-9]+')->middleware('auth:user')->name('post.update');
+        Route::post('/Product/DeleteConfirm', 'App\Http\Controllers\ProductController@deleteConfirm')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product.delete.confirm');
         Route::post('/Product/Delete', 'App\Http\Controllers\ProductController@delete')->where('id', '[0-9]+')->middleware('auth:user')->name('post.delete');
         Route::post('/Product/Create', 'App\Http\Controllers\ProductController@upload')->middleware('auth:user')->name('post.create');
     });
 });
 //Merchant does
-Route::post('/Product', 'App\Http\Controllers\ProductController@show')->where('id', '[0-9]+')->middleware('auth:user')->name('post.product');
+Route::get('/Product', 'App\Http\Controllers\ProductController@show')->middleware('auth:user')->name('get.product');
 
 
 //SuperAdmin does
@@ -113,6 +110,7 @@ Route::group(['middleware' => 'can:superAdmin'], function(){
         })->middleware('auth:user')->name('get.superAdmin.showUsers');
         Route::post('/CRUD/edit', 'App\Http\Controllers\UserPermissionController@showUserPermission')->name('post.showUserPermission');
         Route::post('/CRUD/update', 'App\Http\Controllers\UserPermissionController@editPermission')->name('post.editPermission');
+        Route::post('/CRUD/delete/confirm', 'App\Http\Controllers\UserPermissionController@deleteUserConfirm')->name('post.deleteUser.confirm');
         Route::post('/CRUD/delete', 'App\Http\Controllers\UserPermissionController@deleteUser')->name('post.deleteUser');
     });
 });

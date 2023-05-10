@@ -9,7 +9,6 @@ use Gate;
 class UserPermissionController extends Controller
 {
     public function editPermission(Request $request){
-        // if($request['CRUD'] == null){return redirect()->route('post.editPermission')->withInput();}
         $CRUD = ['C', 'R', 'U', 'D'];
         $isCRUD = [false, true, false, false];
         $CRUD_nums = [2, 3, 5, 7];
@@ -44,9 +43,16 @@ class UserPermissionController extends Controller
         return view('EditCRUD', compact('user'));
     }
 
+    public function deleteUserConfirm(Request $request){
+        $user = User::findOrFail($request['id']);
+        return view('userDeleteConfirm', compact('user'));
+    }
+
     public function deleteUser(Request $request){
         $user = User::findOrFail($request['id']);
+        //if confirmation is false
+        if(strcmp($request['confirm'], 'false')==0){return redirect()->route('get.superAdmin.showUsers');}
         $user->delete();
-        return redirect(route('get.superAdmin.home'));
+        return redirect()->route('get.superAdmin.showUsers');
     }
 }

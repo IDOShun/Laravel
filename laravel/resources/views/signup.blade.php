@@ -4,6 +4,9 @@
         @include('head')
     </head>
     <body class="bg-dark">
+        <!-- Show Error Messages If Any -->
+        @include('alert')
+        <!-- Sign up Section -->
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -46,7 +49,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" required/>
+                                                        <input name="confirm" class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" required/>
                                                         <label for="inputPasswordConfirm">Confirm Password</label>
                                                     </div>
                                                 </div>
@@ -56,9 +59,6 @@
                                             </div>
                                         </form>
                                     </div>
-                                    {{-- <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="login.html">Have an account? Go to login</a></div>
-                                    </div> --}}
                                 </div>
                             </div>
                         </div>

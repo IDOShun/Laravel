@@ -10,9 +10,12 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
 
                 <!-- Only Admin who has 'Delete' permission Can -->
+                @cannot('Delete')
+                    <div style="display:flex; justify-content: center;"><h3 style="color: red;">You Do Not Have Permission To 'Delete'.</h3></div>
+                @endcan
                 @can('Delete')
                 <div style="display:flex; width:60vw; margin-left:auto; margin-right:auto; justify-content:center; margin-bottom:2vh;">
-                    <form action="{{route('post.delete')}}" method="POST">
+                    <form action="{{route('post.product.delete.confirm')}}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{$product->id}}">
                         <button type="submit" class="btn btn-danger" style="color:black;"><b>Delete Product</b></button>

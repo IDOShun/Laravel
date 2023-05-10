@@ -15,13 +15,8 @@
                             </div>
                         </div>
                         <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <form method="POST" action="{{route('post.product')}}" style="text-align: center">
-                                @csrf
-                                <input type="hidden" name="id" value="{{$p->id}}"/>
-                                <button type="submit" class="btn btn-dark">Product Detail</button>
-                            </form>
-                            {{-- <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/Product/{{$p->id}}">Product Detail</a></div> --}}
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="display: flex; justify-content: center;">
+                            <a href="{{route('get.product')}}?uuid={{$p->uuid}}" class="btn btn-dark" style="">Product Detail</a>
                         </div>
                     </div>
                 </div>
