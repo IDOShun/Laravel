@@ -4,7 +4,7 @@ I could not make larval environment on docker because I had never learned ‘lar
 I apologize for the inconvenience and I would like you to install some environment stuff to your ‘check my assignment pc'.
 
 
-# Accounts
+# Default Accounts
 
 - SuperAdmin Account:
   - email: John.doe@example.com
